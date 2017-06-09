@@ -2,7 +2,7 @@
 <?php
 if (file_exists($file = __DIR__ . '/../vendor/autoload.php')) {
     require $file;
-} elseif (file_exists($file = __DIR__ . '/../autoload.php')) {
+} elseif (file_exists($file = __DIR__ . '/../../../autoload.php')) {
     require $file;
 } else {
     die('Please install composer dependencies by "composer install"' . PHP_EOL);
