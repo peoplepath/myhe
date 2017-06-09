@@ -2,6 +2,9 @@
   "name": "intraworlds/myhe",
   "description": "Multi YAML Headless Editor",
   "license": "MIT",
+  "bin": [
+    "bin/myhe"
+  ],
   "require": {
     "symfony/console": "^3.3",
     "symfony/yaml": "^3.3",
