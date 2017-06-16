@@ -19,8 +19,6 @@ abstract class AbstractCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('find')
-            ->setDescription('Finds key(s) in root of YAMLs')
             ->addArgument('pattern', InputArgument::REQUIRED, 'Regular expression pattern for matching a key')
             ->addArgument('directory', InputArgument::REQUIRED, 'A path to YAML file')
             ->addOption(

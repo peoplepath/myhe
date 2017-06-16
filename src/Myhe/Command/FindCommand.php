@@ -8,6 +8,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class FindCommand extends AbstractCommand
 {
 
+    protected function configure()
+    {
+        $this
+            ->setName('find')
+            ->setDescription('Finds matching keys in found YAMLs');
+
+        parent::configure();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // aggregate by keys

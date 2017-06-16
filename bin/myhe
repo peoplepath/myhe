@@ -12,5 +12,6 @@ use IW\Myhe\Command;
 use Symfony\Component\Console\Application;
 
 $application = new Application;
+$application->add(new Command\DeleteCommand);
 $application->add(new Command\FindCommand);
 $application->run();
