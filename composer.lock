@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d93cc5065df43fb3a51f01bcee495906",
+    "content-hash": "f83ed774150c9960665a31ff3bcb2914",
     "packages": [
         {
             "name": "psr/log",
@@ -229,16 +229,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
                 "shasum": ""
             },
             "require": {
@@ -250,7 +250,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -284,7 +284,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -345,16 +345,16 @@
     "packages-dev": [
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "b95ff2c3b122a3ee4b57d149a57d2afce65522c3"
+                "reference": "f9eaf037edf22fdfccf04cb0ab57ebcb1e166219"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b95ff2c3b122a3ee4b57d149a57d2afce65522c3",
-                "reference": "b95ff2c3b122a3ee4b57d149a57d2afce65522c3",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f9eaf037edf22fdfccf04cb0ab57ebcb1e166219",
+                "reference": "f9eaf037edf22fdfccf04cb0ab57ebcb1e166219",
                 "shasum": ""
             },
             "require": {
@@ -392,7 +392,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-05-04T00:33:04+00:00"
+            "time": "2017-06-14T01:23:49+00:00"
         }
     ],
     "aliases": [],
@@ -400,6 +400,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.0"
+    },
     "platform-dev": []
 }
