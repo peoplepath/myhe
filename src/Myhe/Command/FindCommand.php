@@ -22,7 +22,7 @@ class FindCommand extends AbstractCommand
         // aggregate by keys
         $keys = [];
         foreach ($this->find($input, $output) as list($filename, $key)) {
-            $keys[$key][] = $filename;
+            $keys[implode('.', $key)][] = $filename;
         }
 
         // show result

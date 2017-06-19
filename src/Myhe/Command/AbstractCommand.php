@@ -19,8 +19,13 @@ abstract class AbstractCommand extends Command
     protected function configure()
     {
         $this
-            ->addArgument('pattern', InputArgument::REQUIRED, 'Regular expression pattern for matching a key')
-            ->addArgument('directory', InputArgument::REQUIRED, 'A path to YAML file')
+        // TODO [Ondrej Esler, A] as option
+            ->addArgument('directory', InputArgument::REQUIRED, 'A path to YAML files')
+            ->addOption(
+                'pattern', 'p',
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Regular expression pattern for matching a key. Use multiple patterns for each level of nesting'
+            )
             ->addOption(
                 'extension', 'e',
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
@@ -40,8 +45,6 @@ abstract class AbstractCommand extends Command
 
     protected function find(InputInterface $input, OutputInterface $output): Generator
     {
-
-        $pattern = '/' . $input->getArgument('pattern') . '/';
         $finder = new Finder;
         $finder->name('/\.(' . implode('|', array_map('preg_quote', $input->getOption('extension'))) . ')$/');
 
@@ -53,11 +56,11 @@ abstract class AbstractCommand extends Command
 
                 if (is_array($data)) {
                     foreach ($data as $key => $value) {
-                        if (preg_match($pattern, $key)) {
+                        foreach ($this->matchKeys($key, $value, $input->getOption('pattern')) as $keys) {
                             $this->getLogger($output)
-                                ->debug('Match for ' . $key . ' found: ' . $file->getRealPath());
+                                ->debug('Match for ' . implode('.', $keys) . ' found: ' . $file->getRealPath());
 
-                            yield [$file->getRealPath(), $key, $value];
+                            yield [$file->getRealPath(), $keys, $value];
                         }
                     }
                 } else {
@@ -68,6 +71,28 @@ abstract class AbstractCommand extends Command
                 $this->getLogger($output)
                     ->warning('Parse error, skipping: ' . $file->getRealPath(), ['exception' => $exception]);
             }
+        }
+    }
+
+
+    private function matchKeys(string $key, $value, array $patterns, array $matches=[]): Generator {
+        if ($patterns) {
+            if (preg_match('/' . array_shift($patterns) . '/', $key)) {
+                $matches[] = $key;
+
+                if ($patterns && is_array($value)) {
+                    foreach ($value as $k => $v) {
+                        foreach ($this->matchKeys($k, $v, $patterns, $matches) as $m) {
+                            yield $m;
+                        }
+                    }
+                } else {
+                    yield $matches;
+                }
+            }
+        } else {
+            $matches[] = $key;
+            yield $matches;
         }
     }
 }
