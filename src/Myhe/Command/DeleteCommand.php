@@ -36,7 +36,14 @@ class DeleteCommand extends AbstractCommand
                 $data = Yaml::parse(file_get_contents($filename));
 
                 foreach ($keys as $key) {
-                    unset($data[$key]);
+                    $d = &$data;
+                    $l = array_pop($key);
+
+                    foreach ($key as $k) {
+                        $d = &$d[$k];
+                    }
+
+                    unset($d[$l]);
                 }
 
                 file_put_contents($filename, Yaml::dump($data));
