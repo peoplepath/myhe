@@ -2,6 +2,7 @@
 namespace IW\Myhe\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
@@ -12,7 +13,12 @@ class DeleteCommand extends AbstractCommand
     {
         $this
             ->setName('delete')
-            ->setDescription('Deletes matching keys from found YAMLs');
+            ->setDescription('Deletes matching keys from found YAMLs')
+            ->addOption(
+                'inline', 'l',
+                InputOption::VALUE_REQUIRED,
+                'Enable inline dump'
+            );
 
         parent::configure();
     }
@@ -46,7 +52,7 @@ class DeleteCommand extends AbstractCommand
                     unset($d[$l]);
                 }
 
-                file_put_contents($filename, Yaml::dump($data));
+                file_put_contents($filename, Yaml::dump($data, $input->getOption('inline') ?? PHP_INT_MAX));
             }
         }
     }

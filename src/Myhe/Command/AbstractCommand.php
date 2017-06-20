@@ -23,18 +23,18 @@ abstract class AbstractCommand extends Command
             ->addArgument('directory', InputArgument::REQUIRED, 'A path to YAML files')
             ->addOption(
                 'pattern', 'p',
-                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'Regular expression pattern for matching a key. Use multiple patterns for each level of nesting'
             )
             ->addOption(
                 'extension', 'e',
-                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'File extension',
                 ['yml', 'yaml']
             )
             ->addOption(
                 'recursive', 'r',
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_NONE,
                 'Recursive search'
             );
     }
@@ -61,7 +61,7 @@ abstract class AbstractCommand extends Command
 
                 if (is_array($data)) {
                     foreach ($data as $key => $value) {
-                        foreach ($this->matchKeys($key, $value, $input->getOption('pattern'), $input->hasOption('recursive')) as $keys) {
+                        foreach ($this->matchKeys($key, $value, $input->getOption('pattern'), $input->getOption('recursive')) as $keys) {
                             $this->getLogger($output)
                                 ->debug('Match for ' . implode('.', $keys) . ' found: ' . $file->getRealPath());
 
