@@ -31,6 +31,11 @@ abstract class AbstractCommand extends Command
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'File extension',
                 ['yml', 'yaml']
+            )
+            ->addOption(
+                'recursive', 'r',
+                InputOption::VALUE_OPTIONAL,
+                'Recursive search'
             );
     }
 
@@ -56,7 +61,7 @@ abstract class AbstractCommand extends Command
 
                 if (is_array($data)) {
                     foreach ($data as $key => $value) {
-                        foreach ($this->matchKeys($key, $value, $input->getOption('pattern')) as $keys) {
+                        foreach ($this->matchKeys($key, $value, $input->getOption('pattern'), $input->hasOption('recursive')) as $keys) {
                             $this->getLogger($output)
                                 ->debug('Match for ' . implode('.', $keys) . ' found: ' . $file->getRealPath());
 
@@ -75,19 +80,29 @@ abstract class AbstractCommand extends Command
     }
 
 
-    private function matchKeys(string $key, $value, array $patterns, array $matches=[]): Generator {
+    private function matchKeys(string $key, $value, array $patterns, bool $recursive, array $matches=[]): Generator {
         if ($patterns) {
-            if (preg_match('/' . array_shift($patterns) . '/', $key)) {
+            $pattern = array_shift($patterns);
+            if (preg_match('/' . $pattern . '/', $key)) {
                 $matches[] = $key;
 
                 if ($patterns && is_array($value)) {
                     foreach ($value as $k => $v) {
-                        foreach ($this->matchKeys($k, $v, $patterns, $matches) as $m) {
+                        foreach ($this->matchKeys($k, $v, $patterns, false, $matches) as $m) {
                             yield $m;
                         }
                     }
                 } else {
                     yield $matches;
+                }
+            } elseif ($recursive && is_array($value)) {
+                $matches[] = $key;
+                array_unshift($patterns, $pattern);
+
+                foreach ($value as $k => $v) {
+                    foreach ($this->matchKeys($k, $v, $patterns, true, $matches) as $m) {
+                        yield $m;
+                    }
                 }
             }
         } else {
