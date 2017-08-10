@@ -27,9 +27,13 @@ class FindCommand extends AbstractCommand
 
         // show result
         $io = new SymfonyStyle($input, $output);
-        foreach ($keys as $key => $filenames) {
-            $io->section($key);
-            $io->listing($filenames);
+        if ($keys) {
+            foreach ($keys as $key => $filenames) {
+                $io->section($key);
+                $io->listing($filenames);
+            }
+        } else {
+            $io->caution('No keys found');
         }
     }
 }
