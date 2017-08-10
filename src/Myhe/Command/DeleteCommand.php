@@ -52,7 +52,11 @@ class DeleteCommand extends AbstractCommand
                     unset($d[$l]);
                 }
 
-                file_put_contents($filename, Yaml::dump($data, $input->getOption('inline') ?? PHP_INT_MAX));
+                if (empty($data) && $io->confirm('Delete empty file "' . $filename . '" ?')) {
+                    unlink($filename);
+                } else {
+                    file_put_contents($filename, Yaml::dump($data, $input->getOption('inline') ?? PHP_INT_MAX));
+                }
             }
         }
     }
