@@ -14,5 +14,6 @@ use Symfony\Component\Console\Application;
 $application = new Application;
 $application->add(new Command\DeleteCommand);
 $application->add(new Command\FindCommand);
+$application->add(new Command\ShowCommand);
 $application->add(new Command\ValidateCommand);
 $application->run();
