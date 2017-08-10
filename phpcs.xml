@@ -4,5 +4,5 @@
     <file>tests</file>
 
     <rule ref="PSR2"/>
-    <rule ref="PEAR.Commenting.FunctionComment"/>
+    <!-- <rule ref="PEAR.Commenting.FunctionComment"/> -->
 </ruleset>
