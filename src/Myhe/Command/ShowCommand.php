@@ -21,8 +21,8 @@ class ShowCommand extends AbstractCommand
     {
         // aggregate by keys
         $keys = [];
-        foreach ($this->find($input, $output) as list($filename, $key, $value)) {
-            $keys[implode('.', $key)][] = $value;
+        foreach ($this->find($input, $output) as list($filename, $key, $match)) {
+            $keys[implode('.', $key)][] = $this->pickValue($key, $match);
         }
 
         // show result
@@ -45,5 +45,14 @@ class ShowCommand extends AbstractCommand
         } else {
             $io->caution('No keys found');
         }
+    }
+
+    private function pickValue(array $keys, $match)
+    {
+        while (($key = array_shift($keys)) && is_array($match) && array_key_exists($key, $match)) {
+            $match = $match[$key];
+        }
+
+        return $match;
     }
 }

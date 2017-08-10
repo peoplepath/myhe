@@ -70,7 +70,7 @@ abstract class AbstractCommand extends Command
                             $this->getLogger($output)
                                 ->debug('Match for ' . implode('.', $keys) . ' found: ' . $file->getRealPath());
 
-                            yield [$file->getRealPath(), $keys, $value];
+                            yield [$file->getRealPath(), $keys, [$key => $value]];
                         }
                     }
                 } else {
