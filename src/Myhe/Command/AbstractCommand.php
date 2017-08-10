@@ -33,6 +33,11 @@ abstract class AbstractCommand extends Command
                 ['yml', 'yaml']
             )
             ->addOption(
+                'ignore-case', 'i',
+                InputOption::VALUE_NONE,
+                'Perform case insensitive matching'
+            )
+            ->addOption(
                 'recursive', 'r',
                 InputOption::VALUE_NONE,
                 'Recursive search'
