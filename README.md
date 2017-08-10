@@ -1,8 +1,13 @@
 # myhe
 Multi YAML Headless Editor
 
+## Installation
+```bash
+composer global require intraworlds/myhe
+```
+
 ## Usage
- ```bash
+```bash
 # show available commands
 myhe list
 
