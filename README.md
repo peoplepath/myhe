@@ -33,6 +33,7 @@ myhe validate /dir/with/yamls
 - [ ] edit command (edit values by defined rules)
 - [ ] unit tests of course
 - [x] support for nested keys DB_*.value
+- [ ] proper value matching
 
 ## License
 MIT
