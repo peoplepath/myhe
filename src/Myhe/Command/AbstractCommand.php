@@ -80,6 +80,8 @@ abstract class AbstractCommand extends Command
             } catch (ParseException $exception) {
                 $this->getLogger($output)
                     ->warning('Parse error, skipping: ' . $file->getRealPath(), ['exception' => $exception]);
+                $this->getLogger($output)
+                    ->notice('Parse error: ' . $exception->getMessage());
             }
         }
     }
