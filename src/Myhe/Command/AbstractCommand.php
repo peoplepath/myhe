@@ -20,7 +20,7 @@ abstract class AbstractCommand extends Command
     {
         $this
         // TODO [Ondrej Esler, A] as option
-            ->addArgument('directory', InputArgument::REQUIRED, 'A path to YAML files')
+            ->addArgument('path', InputArgument::REQUIRED, 'A path to YAML file(s)')
             ->addOption(
                 'pattern', 'p',
                 InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
@@ -55,12 +55,17 @@ abstract class AbstractCommand extends Command
 
     protected function find(InputInterface $input, OutputInterface $output): Generator
     {
-        $finder = new Finder;
-        $finder->name('/\.(' . implode('|', array_map('preg_quote', $input->getOption('extension'))) . ')$/');
+        if (is_file($path = $input->getArgument('path'))) {
+            $files = new \ArrayIterator(new \SplFileInfo($path));
+        } else {
+            $files = new Finder;
+            $files->name('/\.(' . implode('|', array_map('preg_quote', $input->getOption('extension'))) . ')$/');
+            $files->in($path);
+        }
 
         $matches = [];
 
-        foreach ($finder->in($input->getArgument('directory')) as $file) {
+        foreach ($files as $file) {
             try {
                 $data = Yaml::parse(file_get_contents($file->getRealPath()));
 
