@@ -53,6 +53,8 @@ class ShowCommand extends AbstractCommand
         } else {
             $io->caution('No keys found');
         }
+
+        return self::SUCCESS;
     }
 
     private function pickValue(array $keys, $match)

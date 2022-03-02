@@ -19,5 +19,7 @@ class ValidateCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         iterator_to_array($this->find($input, $output));
+
+        return self::SUCCESS;
     }
 }

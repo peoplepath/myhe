@@ -40,5 +40,7 @@ class FormatCommand extends AbstractCommand
                 file_put_contents($filename, Yaml::dump($data, $input->getOption('inline') ?? PHP_INT_MAX));
             }
         }
+
+        return self::SUCCESS;
     }
 }

@@ -35,5 +35,7 @@ class FindCommand extends AbstractCommand
         } else {
             $io->caution('No keys found');
         }
+
+        return self::SUCCESS;
     }
 }
